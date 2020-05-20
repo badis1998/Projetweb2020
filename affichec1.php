@@ -1,6 +1,89 @@
+<?php
+
+
+    include_once '../../core/CommandeC.php';
+            include_once '../../entities/Commande.php';
+
+$db=config::getConnexion();
+  
+
+ 
+   $req1= $db->query("SELECT  COUNT(*) as nb1  from commande where (prix_total >= 0) AND (prix_total <= 1000) " );
+    $nb1 = $req1->fetch();
+
+    $req2= $db->query("SELECT  COUNT(*) as nb2  from commande where (prix_total > 1000) AND (prix_total <= 2000) " );
+    $nb2 = $req2->fetch();
+
+    $req3= $db->query("SELECT  COUNT(*) as nb3  from commande where (prix_total > 2000) AND (prix_total <= 3000) " );
+    $nb3 = $req3->fetch();
+
+    $req4= $db->query("SELECT  COUNT(*) as nb4 from commande where (prix_total > 3000) AND (prix_total <= 4000) " );
+    $nb4 = $req4->fetch();
+
+    $req5= $db->query("SELECT  COUNT(*) as nb5  from commande where (prix_total > 4000) AND (prix_total <= 5000) " );
+    $nb5 = $req5->fetch();
+
+    $req6= $db->query("SELECT  COUNT(*) as nb6  from commande where (prix_total >5000) AND (prix_total <= 6000) " );
+    $nb6 = $req6->fetch();
+
+    $req7= $db->query("SELECT  COUNT(*) as nb7 from commande where (prix_total > 6000) AND (prix_total <= 7000) " );
+    $nb7 = $req7->fetch();
+
+    $req8= $db->query("SELECT  COUNT(*) as nb8 from commande where (prix_total > 7000) AND (prix_total <= 8000) " );
+    $nb8 = $req8->fetch();
+
+    $req9= $db->query("SELECT  COUNT(*) as nb9  from commande where (prix_total > 8000) AND (prix_total <= 9000) " );
+    $nb9 = $req9->fetch();
+
+    $req10= $db->query("SELECT  COUNT(*) as nb10  from commande where (prix_total > 9000) AND (prix_total <= +10000) " );
+    $nb10 = $req10->fetch();
+
+
+  
+
+
+$dataPoints = array(
+  array("label"=> "0 - 1000", "y"=> intval($nb1['nb1'])),
+  array("label"=> "1000 - 2000", "y"=> intval($nb2['nb2'])),
+  array("label"=> "2000 - 3000", "y"=> intval($nb3['nb3'])),
+  array("label"=> "3000 - 4000", "y"=> intval($nb4['nb4'])),
+  array("label"=> "4000 - 5000", "y"=> intval($nb5['nb5'])),
+  array("label"=> "6000 - 7000", "y"=> intval($nb6['nb6'])),
+  array("label"=> "7000 - 8000", "y"=> intval($nb7['nb7'])),
+  array("label"=> "8000 - 9000", "y"=> intval($nb8['nb8'])),
+  array("label"=> "9000 - 10000", "y"=> intval($nb9['nb9'])),
+  array("label"=> "10000 - +10000", "y"=> intval($nb10['nb10'])),
+  
+
+
+);
+  
+?>
+
 <!DOCTYPE html>
 <html>
-
+<script>
+window.onload = function () {
+ 
+var chart = new CanvasJS.Chart("chartContainer", {
+  animationEnabled: true,
+  exportEnabled: true,
+  theme: "light1", // "light1", "light2", "dark1", "dark2"
+  title:{
+    text: "Statistiques des commandes par rapport aux totale"
+  },
+  data: [{
+    type: "column", //change type to bar, line, area, pie, etc
+    //indexLabel: "{y}", //Shows y value on all Data Points
+    indexLabelFontColor: "#5A5757",
+    indexLabelPlacement: "outside",   
+    dataPoints: <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>
+  }]
+});
+chart.render();
+ 
+}
+</script>
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -28,6 +111,7 @@
   <link rel="stylesheet" href="bower_components/bootstrap-daterangepicker/daterangepicker.css">
   <!-- bootstrap wysihtml5 - text editor -->
   <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+  <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -358,12 +442,7 @@
               </span>
             </a>
             <ul class="treeview-menu">
-            <li><a href="ajoutf1.html"><i class="fa fa-circle-o"></i> ajouter facture</a></li>
               <li><a href="affichf1.php"><i class="fa fa-circle-o"></i> Affiche facture</a></li>
-              <li><a href="modiff1.html"><i class="fa fa-circle-o"></i> modifier facture</a></li>
-              <li><a href="tri1.php"><i class="fa fa-circle-o"></i> tri facture</a></li>
-              <li><a href="suppf1.html"><i class="fa fa-circle-o"></i> Supprimer facture</a></li>
-              <li><a href="rechf1.php"><i class="fa fa-circle-o"></i> Chercher facture</a></li>
             </ul>
           </li>
       </section>
@@ -386,28 +465,52 @@
           <div class="col-xs-20">
             <?php
 
-            include_once '../../core/CommandeC.php';
-            include_once '../../entities/Commande.php';
+            
 
             $Commande1C = new CommandeC();
             $resultat = $Commande1C->afficher();
 
+            if (isset($_GET['rech'])){
+              $resultat=$Commande1C->rechercher2($_GET['rech2']);
+            }
+            if (isset($_GET['triasc'])) {
+
+              $resultat=$Commande1C->afficherASC();
+             
+            }
+            if (isset($_GET['rech'])){
+              $resultat=$Commande1C->rechercher2($_GET['rech2']);
+            }
+
             ?>
+            <div class="agile-grids"> 
+            <div id="chartContainer" style="height: 350px; width: 80%; margin-left: 230px" align="center"></div>
+          <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+        </div>
+             
             <center>
               <legend>
                 <h2> Afficher commande </h2>
               </legend>
             </center>
-
+            <form  method="GET" >   
+            <nav class="navbar navbar-expand-sm navbar-dark">
+      <input class=" mr-sm-2" type="text" name="rech2" placeholder="Search">
+      <button class="btn btn-success" name="rech"  type="submit">Search</button>
+      </nav>
+      <br>
+      
             <table id="example1" class="table table-striped">
               <tr>
                 <td>Id Commande</td>
                 <td>Id Client</td>
                 <td>date commande</td>
-                <td>prix total</td>
+                <td>prix total <button type="submit" name="tridesc" class="btn btn-light"><span class="glyphicon glyphicon-triangle-bottom"></span></button>
+<button  type="submit" name="triasc" class="btn btn-light "><span class="glyphicon glyphicon-triangle-top"></span></button></td>
                 <td>etat</td>
                 <td>afficher détails</td>
                 <td>supprimer</td>
+                <td> facture </td>
               </tr>
               <tr>
                 <?php
@@ -425,13 +528,14 @@
                                                                                                                                                                                                                                                                         } ?></td>
                 <td> <a href="commande_info.php?idcom=<?php echo $res['id_commande']; ?>"><button type="button" class="btn btn-info">Info</button></a></td>
                 <td> <a href="supprimercommande.php?idcom=<?php echo $res['id_commande']; ?>"><button type="button" class="btn btn-danger">supprimer</button></a></td>
+                <td><a class="btn btn-secondary"  href="ajoutf1.php?idcom=<?php echo $res['id_commande']; ?>">Ajouter Facture</td>
               </tr>
             <?php
                 }
             ?>
             </tr>
             </table>
-
+            </form>
             </fieldset>
             <div class="small-box bg-green">
 
@@ -593,7 +697,7 @@
       <!-- /.tab-pane -->
       <!-- Settings tab content -->
       <div class="tab-pane" id="control-sidebar-settings-tab">
-        <form method="post">
+        
           <h3 class="control-sidebar-heading">General Settings</h3>
 
           <div class="form-group">

@@ -9,5 +9,5 @@ if(isset($_POST['Modifier']))
   modifier($id);
 }
 
-header('LOCATION:modiff1.html');
+header('LOCATION:affichf1.php');
 ?>

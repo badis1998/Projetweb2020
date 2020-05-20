@@ -355,12 +355,7 @@
               </span>
             </a>
             <ul class="treeview-menu">
-            <li><a href="ajoutf1.html"><i class="fa fa-circle-o"></i> ajouter facture</a></li>
               <li><a href="affichf1.php"><i class="fa fa-circle-o"></i> Affiche facture</a></li>
-              <li><a href="modiff1.html"><i class="fa fa-circle-o"></i> modifier facture</a></li>
-              <li><a href="tri1.php"><i class="fa fa-circle-o"></i> tri facture</a></li>
-              <li><a href="suppf1.html"><i class="fa fa-circle-o"></i> Supprimer facture</a></li>
-              <li><a href="rechf1.php"><i class="fa fa-circle-o"></i> Chercher facture</a></li>
             </ul>
           </li>
       </section>
@@ -374,6 +369,7 @@
       <h1>
         <center></center>
       </h1>
+      
     </section>
 
     <!-- Main content -->
@@ -381,24 +377,48 @@
       <!-- Small boxes (Stat box) -->
       <div class="row">
         <div class="col-xs-20">
+       
           <?php
 
           include_once '../../core/FactureC.php';
           include_once '../../entities/Facture.php';
-
+          
+         
+       
           $resultat=afficher();
+          if (isset($_GET['tridesc'])) {
+
+            $resultat=afficherDESC();
+          }
+            
+          if (isset($_GET['triasc'])) {
+
+              $resultat=afficherASC();
+             
+            }
+            if (isset($_GET['rech'])){
+              $resultat=rechercher2($_GET['rech2']);
+            }
 
           ?>
-            <form name="f1"  method="POST" action="pdf.php" onSubmit="return verif()" >
-          <center><legend><h2>Affiche Facture</h2></legend></center>
+             <form  method="GET" >        
+      <center><legend><h2>Affiche Facture</h2></legend></center>
+      <nav class="navbar navbar-expand-sm navbar-dark">
+      <input class=" mr-sm-2" type="text" name="rech2" placeholder="Search">
+      <button class="btn btn-success" name="rech"  type="submit">Search</button>
+      </nav>
+      <br>
 
           <table id="example1" class="table table-striped">
             <tr>
               <td>num facture</td>
-              <td>quantite</td>
+              <td> quantite <button type="submit" name="tridesc" class="btn btn-light"><span class="glyphicon glyphicon-triangle-bottom"></span></button>
+<button  type="submit" name="triasc" class="btn btn-light "><span class="glyphicon glyphicon-triangle-top"></span></button></td>
               <td>unite</td>
               <td>description</td>
               <td>num commande</td>
+              <td>modifier</td>
+              <td>supprimer</td>
             </tr>
             <tr>
               <?php
@@ -411,6 +431,8 @@
                   <td><?php echo $res['unite']; ?></td>
                   <td><?php echo $res['description']; ?></td>
                   <td><?php echo $res['numeroc']; ?></td>
+                  <td> <a href="modiff1.php?idfacture=<?php echo $res['numf']; ?>"><button type="button" class="btn btn-info">Modifier</button></a></td>
+                <td> <a href="suppf.php?idfacture=<?php echo $res['numf']; ?>"><button type="button" class="btn btn-danger">supprimer</button></a></td>
 
 
                 </tr>
@@ -419,7 +441,9 @@
               ?>
             </tr>
           </table>
+             </form>
            <br>
+           <form name="f1"  method="POST" action="pdf.php" onSubmit="return verif()" >
         <center>
         <td><button type="submit" name="Imprimer" value="Imprimer" class="btn btn-danger">Imprimer</button></td>
       </center>

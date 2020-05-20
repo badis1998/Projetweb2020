@@ -37,6 +37,47 @@
 
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  <script type="text/javascript">
+    function verif()
+    {
+      var i=0;
+      if(f1.numf.value=="")
+      {
+        alert("saisir votre num facture");
+        i--;
+        return false;
+      }
+      if(f1.quantite.value=="")
+      {
+        alert("saisir votre quantite");
+        i--;
+        return false;
+      }
+      if(f1.unite.value=="")
+      {
+        alert("saisir votre unite");
+        i--;
+        return false;
+      }
+      if(f1.description.value=="")
+      {
+        alert("saisir votre description");
+        i--;
+        return false;
+      }
+      if(f1.numeroc.value=="")
+      {
+        alert("saisir votre numeroc");
+        i--;
+        return false;
+      }
+      if(i==5)
+      {
+        return true;
+      }
+    }
+
+    </script>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -268,7 +309,7 @@
                 <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                 <p>
-                  Badis Raissi - Web Developer
+                  Badis Raissi- Web Developer
                   <small>Member since Nov. 2012</small>
                 </p>
               </li>
@@ -357,10 +398,6 @@
           <ul class="treeview-menu">
           <li><a href="ajoutf1.html"><i class="fa fa-circle-o"></i> ajouter facture</a></li>
             <li><a href="affichf1.php"><i class="fa fa-circle-o"></i> Affiche facture</a></li>
-            <li><a href="modiff1.html"><i class="fa fa-circle-o"></i> modifier facture</a></li>
-            <li><a href="tri1.php"><i class="fa fa-circle-o"></i> tri facture</a></li>
-            <li><a href="suppf1.html"><i class="fa fa-circle-o"></i> Supprimer facture</a></li>
-            <li><a href="rechf1.php"><i class="fa fa-circle-o"></i> Chercher facture</a></li>
           </ul>
         </li>
     </section>
@@ -372,7 +409,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-          <center>Gestion de Commande & Facture</center>
+          <center></center>
       </h1>
     </section>
 
@@ -380,8 +417,38 @@
     <section class="content">
       <!-- Small boxes (Stat box) -->
       <div class="row">
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
+        <div class="col-xs-20">
+          <fieldset >
+      <form name="f1"  method="POST" action="ajoutf.php" onSubmit="return verif()" >
+         <center><legend><h2> Ajouter facture </h2></legend></center>
+        <table id="example1" class="table table-striped">
+          <tr>
+            <td> num facture </td>
+            <td><input type="number" name="numf" value="<?php echo $_GET['idcom']; ?>"/></td>
+          </tr>
+          <tr>
+          <td> quantite </td>
+          <td><input type="number" name="quantite" value=""/></td>
+        </tr>
+        <tr>
+            <td> unite </td>
+            <td><input type="number" name="unite" value=""/></td>
+          </tr>
+          <tr>
+            <td> description </td>
+            <td><input type="text" name="description" value=""/></td>
+          </tr>
+          <tr>
+            <td> num commande  </td>
+            <td><input type="number" name="numeroc" value=""/></td>
+          </tr>
+        <tr>
+          <td></td>
+          <td><input type="submit"  name="Ajouter" value="Ajouter"/></td>
+        </tr>
+        </table>
+      </form>
+    </fieldset>         
           <div class="small-box bg-green">
    
     

@@ -37,6 +37,47 @@
 
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  <script type="text/javascript">
+    function verif()
+    {
+      var i=0;
+      if(f1.numf.value=="")
+      {
+        alert("saisir votre num facture");
+        i--;
+        return false;
+      }
+      if(f1.quantite.value=="")
+      {
+        alert("saisir votre quantite");
+        i--;
+        return false;
+      }
+      if(f1.unite.value=="")
+      {
+        alert("saisir votre unite");
+        i--;
+        return false;
+      }
+      if(f1.description.value=="")
+      {
+        alert("saisir votre description");
+        i--;
+        return false;
+      }
+      if(f1.numeroc.value=="")
+      {
+        alert("saisir votre numeroc");
+        i--;
+        return false;
+      }
+      if(i==5)
+      {
+        return true;
+      }
+    }
+
+    </script>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -372,7 +413,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-          <center>Gestion de Commande & Facture</center>
+          <center></center>
       </h1>
     </section>
 
@@ -380,8 +421,52 @@
     <section class="content">
       <!-- Small boxes (Stat box) -->
       <div class="row">
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
+        <div class="col-xs-20">
+         <fieldset >
+         <?php
+        include_once '../../core/FactureC.php';
+        include_once '../../entities/Facture.php';
+        $result= rechercher($_GET['idfacture']);
+        ?>
+        
+      <form name="f1"  method="POST" action="modiff.php" onSubmit="return verif()" >
+         <center><legend><h2> modifier facture </h2></legend></center>
+        <table  id="example1" class="table table-striped">
+          <?php
+          foreach ($result as $row){
+
+          ?>
+          <tr>
+            <td> num facture </td>
+            <td><input disabled value="<?php echo $row['numf']; ?>"/></td>
+            <td><input hidden name="numf" value="<?php echo $row['numf']; ?>"/></td>
+          </tr>
+          <tr>
+          <td> quantite </td>
+          <td><input type="number" name="quantite" value="<?php echo $row['quantite']; ?>"/></td>
+        </tr>
+        <tr>
+            <td> unite </td>
+            <td><input type="number" name="unite" value="<?php echo $row['unite']; ?>"/></td>
+          </tr>
+          <tr>
+            <td> description </td>
+            <td><input type="text" name="description" value="<?php echo $row['description']; ?>"/></td>
+          </tr>
+          <tr>
+            <td> num commande  </td>
+            <td><input type="number" name="numeroc" value="<?php echo $row['numeroc']; ?>"/></td>
+          </tr>
+        <tr>
+          <td></td>
+          <td><input type="submit"  name="Modifier" value="Modifier"/></td>
+        </tr>
+        <?php
+        }
+          ?>
+        </table>
+      </form>
+    </fieldset>         
           <div class="small-box bg-green">
    
     

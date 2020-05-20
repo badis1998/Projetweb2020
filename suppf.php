@@ -5,11 +5,9 @@ include_once '../../entities/Facture.php';
 
           $resultat=afficher();
 
-if (isset($_POST["Supprimer"]))
-{
-	$id=(int)$_POST['numf'];
+	$id=(int)$_GET['idfacture'];
 	supprimer($id);
-}
 
-header('LOCATION:suppf1.html');
+
+header('LOCATION:affichf1.php');
 ?>

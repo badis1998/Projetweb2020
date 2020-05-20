@@ -16,7 +16,7 @@
             $mail->Port = 587;                                    // TCP port to connect to
 
             $mail->setFrom('badis.raissi@esprit.tn');
-            $mail->addAddress('badisraissi98@gmail.com');     // Add a recipient
+            $mail->addAddress($_GET['mail']);     // Add a recipient
                   // Name is optional
             $mail->addReplyTo('badis.raissi@esprit.tn');
 
@@ -24,8 +24,8 @@
    // Optional name
             $mail->isHTML(true);                                  // Set email format to HTML
 
-            $mail->Subject = 'Here is the subject';
-            $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
+            $mail->Subject = 'Commande';
+            $mail->Body    = 'salut '.$_GET['nom']. ' votre commande a été validee';
             $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
             if(!$mail->send()) {
@@ -34,5 +34,6 @@
             } else {
                 echo 'Message has been sent';
             }
-            //header('Location: affichec1.php');
+            //header('Location:');
             ?>
+             <script> location.replace("affichec1.php"); </script>

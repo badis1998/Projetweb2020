@@ -9,5 +9,5 @@ if(isset($_POST['Ajouter']))
   ajouter($soi);
 }
 
-header('LOCATION:ajoutf1.html');
+header('LOCATION:affichf1.php');
 ?>

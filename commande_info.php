@@ -355,12 +355,7 @@
               </span>
             </a>
             <ul class="treeview-menu">
-            <li><a href="ajoutf1.html"><i class="fa fa-circle-o"></i> ajouter facture</a></li>
               <li><a href="affichf1.php"><i class="fa fa-circle-o"></i> Affiche facture</a></li>
-              <li><a href="modiff1.html"><i class="fa fa-circle-o"></i> modifier facture</a></li>
-              <li><a href="tri1.php"><i class="fa fa-circle-o"></i> tri facture</a></li>
-              <li><a href="suppf1.html"><i class="fa fa-circle-o"></i> Supprimer facture</a></li>
-              <li><a href="rechf1.php"><i class="fa fa-circle-o"></i> Chercher facture</a></li>
             </ul>
           </li>
       </section>
